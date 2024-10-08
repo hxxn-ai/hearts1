@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Heart</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="heart-container" id="heartContainer" onclick="unfoldHeart()">
+        <div class="heart left"></div>
+        <div class="heart right"></div>
+        <div class="click-me" id="clickMeText">CLICK ME</div>
+        <div class="message-container">
+            <img src="image2.png" class="side-image left-image" id="leftBear" alt="Bear Image Left">
+            <div class="message" id="message">I love you so much Ronnie meri jaan, Happy late boyfriend's day 😍💖❣️</div>
+            <img src="image2.png" class="side-image right-image" id="rightBear" alt="Bear Image Right">
+        </div>
+    </div>
+
+    <script>
+        function unfoldHeart() {
+            const leftHeart = document.querySelector('.heart.left');
+            const rightHeart = document.querySelector('.heart.right');
+            const message = document.getElementById('message');
+            const container = document.getElementById('heartContainer');
+            const clickMeText = document.getElementById('clickMeText');
+            const leftBear = document.getElementById('leftBear');
+            const rightBear = document.getElementById('rightBear');
+
+            leftHeart.style.transform = 'translateX(-120%)';
+            rightHeart.style.transform = 'translateX(120%)';
+            message.style.display = 'block';
+            clickMeText.style.display = 'none'; // Hide "CLICK ME" text
+            leftBear.style.display = 'block'; // Show left bear
+            rightBear.style.display = 'block'; // Show right bear
+
+            container.classList.add('bounce');
+            setTimeout(() => {
+                container.classList.remove('bounce');
+            }, 500);
+
+            // Confetti Effect
+            for (let i = 0; i < 50; i++) {
+                createConfetti();
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.position = 'absolute';
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.top = `${Math.random() * 100}vh`;
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            confetti.style.opacity = '0.8';
+            confetti.style.animation = `fall ${Math.random() * 3 + 3}s linear forwards`;
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        // Confetti Animation
+        const confettiStyle = document.createElement('style');
+        confettiStyle.innerHTML = `
+            .confetti {
+                position: fixed;
+                transform: translateY(0);
+                animation: fall 5s linear infinite;
+            }
+
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(confettiStyle);
+    </script>
+</body>
+</html>
+
